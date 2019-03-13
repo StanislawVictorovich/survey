@@ -1,9 +1,6 @@
 <template>
   <div id="app">
     <div id="nav">
-<!--      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>-->
-      <md-button class="md-raised md-primary">Start</md-button>
     </div>
     <router-view/>
   </div>

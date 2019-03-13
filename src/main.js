@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
+import 'vue-material/dist/theme/black-green-light.css' 
 
 Vue.use(VueMaterial)
 Vue.config.productionTip = false
