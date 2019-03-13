@@ -41,7 +41,7 @@ import { mapActions } from 'vuex'
       confirm() {
         if (this.validEmail()) {
           this.saveEmail(this.email);
-          this.$router.push({ path: 'about' });
+          this.$router.push('registration');
         } else {
           this.error = !this.validEmail();
         }
