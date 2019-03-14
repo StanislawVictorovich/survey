@@ -34,8 +34,7 @@ export default {
         this.incrementCorrectAnswer();
       }
       if (indexOfQuestion >= this.questions.length - 1) {
-        console.log('end of test... Routing...'); 
-        console.log(this.correctAnswers);
+        this.$router.push('result');
         return;
       }
       this.incrementProgress();
