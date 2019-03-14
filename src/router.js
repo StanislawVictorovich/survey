@@ -23,15 +23,19 @@ export default new Router({
       name: 'survey',
       component: () => import('./components/Survey/Survey.vue')
     },
+        {
+      path: '/result',
+      name: 'result',
+      component: () => import('./components/Result/Result.vue')
+    },
     {
       path: '/accesserror',
       name: 'accesserror',
       component: () => import('./components/AccessError/AccessError.vue')
     },
     {
-      path: '/result',
-      name: 'result',
-      component: () => import('./components/Result/Result.vue')
+      path: '*',
+      component: () => import ('./components/AccessError/AccessError.vue')
     }
   ]
 })
