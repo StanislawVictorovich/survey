@@ -47,13 +47,13 @@ export default {
     correctAnswers: state => state.correctAnswers
   },
   mutations: {
-    INCREMENT_CORRECT_ANSWERS(state) {
+    INCREMENT_CORRECT_ANSWER(state) {
       state.correctAnswers += 1;
     }
   },
   actions: {
-    incrementCorrectAnswers( { commit } ) {
-      commit('INCREMENT_CORRECT_ANSWERS');
+    incrementCorrectAnswer( { commit } ) {
+      commit('INCREMENT_CORRECT_ANSWER');
     }
   }
 }
