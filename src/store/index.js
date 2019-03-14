@@ -9,5 +9,6 @@ export default new Vuex.Store({
   modules: {
     user,
     survey
-  }
+  },
+  strict: process.env.NODE_ENV !== 'production'
 })

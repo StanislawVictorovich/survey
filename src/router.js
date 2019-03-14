@@ -35,7 +35,7 @@ export default new Router({
     },
     {
       path: '*',
-      component: () => import ('./components/AccessError/AccessError.vue')
+      redirect: '/accesserror'
     }
   ]
 })
