@@ -1,4 +1,6 @@
 md-steppers(:md-active-step.sync='active', md-vertical='', md-linear='')
+  span.md-display-2 Hello, {{ firstName }}.
+  p Pass the next test and see results.
   md-progress-bar(md-mode='determinate', :md-value='progress')
   md-step(v-for='(question, index) of questions', :key='getId(index)', :id='getId(index)', :md-editable='false')
     h2(v-html='question.title')
