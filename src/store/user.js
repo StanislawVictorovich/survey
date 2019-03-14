@@ -25,7 +25,7 @@ export default {
     },
     SAVE_DATE(state, date) {
       state.date = date;
-    },
+    }
   },
   actions: {
     saveEmail( { commit }, email ) {

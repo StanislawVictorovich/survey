@@ -1,54 +1,68 @@
 <template>
   <md-steppers :md-active-step.sync="active" md-vertical md-linear>
+    <md-progress-bar md-mode="determinate" :md-value="progress"></md-progress-bar>
     <md-step 
-      id="first" 
-      md-label="First Step" 
-      md-description="Optional" 
-      :md-editable="false" 
-      :md-done.sync="first">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-        <md-button class="md-raised md-primary" @click="setDone('first', 'second')">Continue</md-button>
+      v-for="(question, index) of questions"
+      :key="getId(index)"
+      :id="getId(index)"
+      :md-editable="false">
+        <h2 v-html="question.title"></h2>
+      <md-button class="md-raised md-primary" @click="nextStep(index)">Continue</md-button>      
     </md-step>
-
-    <md-step id="second" md-label="Second Step" :md-error="secondStepError" :md-editable="false" :md-done.sync="second">
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias doloribus eveniet quaerat modi cumque quos sed, temporibus nemo eius amet aliquid, illo minus blanditiis tempore, dolores voluptas dolore placeat nulla.</p>
-      <md-button class="md-raised md-primary" @click="setDone('second', 'third')">Continue</md-button>
-      <md-button class="md-raised md-primary" @click="setError()">Set error!</md-button>
-    </md-step>
-
+    <md-button class="md-primary md-raised" @click="test">test</md-button>
   </md-steppers>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
   export default {
-    name: 'StepperNonEditable',
     data(){
       return {
-        active: 'first',
-        first: false,
-        second: false,
-        third: false,
-        secondStepError: null
+        id: null,
+        active: null,
+        progressPercents: null
+      }
+    },
+    computed: {
+      ...mapGetters(['questions', 'correctAnswers']),
+      progress: {
+        get() {
+          return this.progressPercents + this.progressLength;
+        }
+      },
+      progressLength: {
+        get() {
+          return 100 / this.questions.length;
+        }
       }
     },
     methods: {
-      setDone (id, index) {
-        this[id] = true
-
-        this.secondStepError = null
-
-        if (index) {
-          this.active = index
+      ...mapActions(['incrementCorrectAnswers']),
+      nextStep(index) {
+        if (index >= this.questions.length - 1) {
+          console.log('end of test... Routing...'); 
+          return;
         }
+        this.incrementProgress();
+        this.active = this.getId(index+1);
       },
-      setError () {
-        this.secondStepError = 'This is an error!'
+      incrementProgress() {
+        this.progressPercents += this.progressLength;
+      },
+      getId(index) {
+          return `${this.id}${index}`;
+      },      
+      async test(){/* console.log(this.currentStep, this.questions.length);
+        console.log(await this.nextStep());
+        console.log(this.first, this.second, this.third, this.fourth, this.fifth); */
+        this.incrementCorrectAnswers();
+        console.log(this.correctAnswers);
       }
+    },
+    created() {
+      this.id = "surv";
+      this.active = this.getId(0);
     }
   }
 </script>
