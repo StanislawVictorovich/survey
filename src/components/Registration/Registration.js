@@ -1,4 +1,4 @@
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'ErrorsMessages',
@@ -11,6 +11,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['email']),
     messageClass () {
       return {
         'md-invalid': this.hasMessages
@@ -29,5 +30,10 @@ export default {
         this.hasMessages = true;
       }
     }
+  },
+  created() {
+    if (!this.email) {
+      this.$router.push('accesserror');
+    } 
   }
 }
