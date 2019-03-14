@@ -24,9 +24,14 @@ export default new Router({
       component: () => import('./components/Survey/Survey.vue')
     },
     {
-      path: '/notpermitted',
+      path: '/accesserror',
       name: 'accesserror',
       component: () => import('./components/AccessError/AccessError.vue')
+    },
+    {
+      path: '/result',
+      name: 'result',
+      component: () => import('./components/Result/Result.vue')
     }
   ]
 })
