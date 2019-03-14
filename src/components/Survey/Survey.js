@@ -11,7 +11,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['questions', 'correctAnswers']),
+    ...mapGetters(['questions', 'correctAnswers', 'email', 'firstName']),
     progress: {
       get() {
         return this.progressPercents + this.progressLength;
@@ -53,6 +53,10 @@ export default {
     }
   },
   created() {
+    if (!this.email || !this.firstName) {
+      this.$router.push('accesserror');
+      return;
+    } 
     this.id = "surv";
     this.active = this.getId(0);
   }
