@@ -7,7 +7,7 @@ div
 </template>
 
 <script>
-import { regEmail } from '../constants';
+import constants from '../types/constants';
 import storage from '../services/storage';
 
 export default {
@@ -22,7 +22,7 @@ export default {
   computed: {
     validEmail: {
       get() {
-        return regEmail.test(this.email);
+        return constants.regEmail.test(this.email);
       }
     }
   },

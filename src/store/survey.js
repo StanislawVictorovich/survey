@@ -1,4 +1,4 @@
-import { INCREMENT_CORRECT_ANSWER, COMPLETE_TEST } from '../constants';
+import constants from '../types/constants';
 
 export default {
   state() {
@@ -60,10 +60,10 @@ export default {
   },
   actions: {
     incrementCorrectAnswer( { commit } ) {
-      commit(INCREMENT_CORRECT_ANSWER);
+      commit(constants.INCREMENT_CORRECT_ANSWER);
     },
     completeTest( { commit } ) {
-      commit(COMPLETE_TEST);
+      commit(constants.COMPLETE_TEST);
     }
   }
 }

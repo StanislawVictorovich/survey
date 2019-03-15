@@ -8,7 +8,7 @@ div
 <script>
 import { mapGetters } from 'vuex';
 import storage from '../services/storage';
-import { questions, correctAnswers, testCompleted } from '../constants';
+import constants from '../types/constants';
 
 export default {
   data() {
@@ -17,7 +17,7 @@ export default {
     }      
   },
   computed: {
-    ...mapGetters([questions, correctAnswers, testCompleted]),
+    ...mapGetters([constants.questions, constants.correctAnswers, constants.testCompleted]),
     result: {
       get() {
         return 100 / this.questions.length * this.correctAnswers;
