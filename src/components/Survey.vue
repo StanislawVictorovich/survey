@@ -13,7 +13,7 @@ md-steppers(:md-active-step.sync='active', md-vertical='', md-linear='')
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import UserService from '../services/User.service'
+import Storage from '../services/Storage'
 
 export default {
   data(){
@@ -68,7 +68,7 @@ export default {
     }
   },
   created() {
-    if (!UserService.storage.email || !UserService.storage.firstName) {
+    if (!Storage.getData('email') || !Storage.getData('firstName')) {
       this.$router.push('Accesserror');
       return;
     } 

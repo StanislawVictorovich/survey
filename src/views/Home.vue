@@ -10,7 +10,7 @@ div
 
 <script>
 import { regEmail } from '../constants'
-import UserService from '../services/User.service'
+import Storage from '../services/Storage'
 
 export default {
   name: 'home',
@@ -27,7 +27,7 @@ export default {
     },
     confirm() {
       if (this.validEmail()) {
-        UserService.storage.email = this.email;
+        Storage.setData('email', this.email);
         this.$router.push('registration');
       } else {
         this.error = !this.validEmail();
