@@ -16,7 +16,6 @@
 import storage from '../services/storage';
 
 export default {
-  name: 'ErrorsMessages',
   data() {
     return {
       firstName: null,
