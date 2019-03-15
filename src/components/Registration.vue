@@ -2,7 +2,7 @@
 .registration
   md-field(:class='messageClass')
     label First name
-    md-input(v-model='firstName', required='', @keydown='hasMessages = false')
+    md-input(v-model='firstName', required='', @keydown='showErrorHint = false')
     span.md-error First name is required
   md-field
     label Last name
@@ -21,13 +21,13 @@ export default {
       firstName: null,
       lastName: null,
       date: null,
-      hasMessages: false
+      showErrorHint: false
     }
   },
   computed: {
     messageClass () {
       return {
-        'md-invalid': this.hasMessages
+        'md-invalid': this.showErrorHint
       }
     }
   },
@@ -39,7 +39,7 @@ export default {
         storage.setData('date', this.date);
         this.$router.push('survey');
       } else {
-        this.hasMessages = true;
+        this.showErrorHint = true;
       }
     }
   },
