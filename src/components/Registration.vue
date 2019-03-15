@@ -1,3 +1,18 @@
+<template lang="pug">
+.registration
+  md-field(:class='messageClass')
+    label First name
+    md-input(v-model='firstName', required='', @keydown='hasMessages = false')
+    span.md-error First name is required
+  md-field
+    label Last name
+    md-input(v-model='lastName')
+  md-datepicker(v-model='date')
+    label Select your birth date
+  md-button.md-primary.md-raised(@click='submit') Start
+</template>
+
+<script>
 import { mapActions, mapGetters } from 'vuex'
 
 export default {
@@ -33,7 +48,14 @@ export default {
   },
   created() {
     if (!this.email) {
-      this.$router.push('accesserror');
+      this.$router.push('Accesserror');
     } 
   }
 }
+</script>
+
+<style lang="scss" scoped>
+.registration {
+  margin: 2em;
+}
+</style>
