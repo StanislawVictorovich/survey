@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
 import storage from '../services/storage';
 
 export default {
@@ -48,7 +47,7 @@ export default {
   created() {
     if (!storage.getData('email')) {
       this.$router.push('Accesserror');
-    } ;
+    }
   }
 }
 </script>
