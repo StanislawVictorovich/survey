@@ -1,6 +1,6 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import survey from './survey'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import survey from './survey';
 
 Vue.use(Vuex)
 
