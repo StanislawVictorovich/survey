@@ -18,7 +18,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['questions', 'correctAnswers']),
+    ...mapGetters(['questions', 'correctAnswers', 'testCompleted']),
     firstName: {
       get() {
         return UserService.storage.firstName
@@ -31,7 +31,7 @@ export default {
     }
   },
   created() {
-    if (!UserService.storage.email || !UserService.storage.firstName) {
+    if (!UserService.storage.email || !UserService.storage.firstName || !this.testCompleted) {
       this.$router.push('Accesserror');
       return;
     }
