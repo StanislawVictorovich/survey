@@ -39,7 +39,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['incrementCorrectAnswer']),
+    ...mapActions(['incrementCorrectAnswer', 'completeTest']),
     nextStep(indexOfQuestion) {
       if (!this.selectedChiose) {
         this.error = true;
@@ -49,6 +49,7 @@ export default {
         this.incrementCorrectAnswer();
       }
       if (indexOfQuestion >= this.questions.length - 1) {
+        this.completeTest();
         this.$router.push('result');
         return;
       }
