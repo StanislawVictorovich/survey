@@ -11,8 +11,8 @@ md-steppers(:md-active-step.sync='active', md-vertical='', md-linear='')
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-import Storage from '../services/Storage'
+import { mapGetters, mapActions } from 'vuex';
+import storage from '../services/storage';
 
 export default {
   data(){
@@ -67,7 +67,7 @@ export default {
     }
   },
   created() {
-    if (!Storage.getData('email') || !Storage.getData('firstName')) {
+    if (!storage.getData('email') || !storage.getData('firstName')) {
       this.$router.push('Accesserror');
       return;
     } 

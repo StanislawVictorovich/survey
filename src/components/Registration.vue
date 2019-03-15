@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
-import Storage from '../services/Storage'
+import { mapActions, mapGetters } from 'vuex';
+import storage from '../services/storage';
 
 export default {
   name: 'ErrorsMessages',
@@ -36,9 +36,9 @@ export default {
   methods: {
     submit() {
       if (this.firstName) {
-        Storage.setData('firstName', this.firstName);
-        Storage.setData('lastName', this.lastName);
-        Storage.setData('date', this.date);
+        storage.setData('firstName', this.firstName);
+        storage.setData('lastName', this.lastName);
+        storage.setData('date', this.date);
         this.$router.push('survey');
       } else {
         this.hasMessages = true;
@@ -46,9 +46,9 @@ export default {
     }
   },
   created() {
-    if (!Storage.getData('email')) {
+    if (!storage.getData('email')) {
       this.$router.push('Accesserror');
-    } 
+    } ;
   }
 }
 </script>

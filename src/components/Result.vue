@@ -6,8 +6,8 @@ div
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Storage from '../services/Storage'
+import { mapGetters } from 'vuex';
+import storage from '../services/storage';
 
 export default {
   data() {
@@ -19,7 +19,7 @@ export default {
     ...mapGetters(['questions', 'correctAnswers', 'testCompleted']),
     firstName: {
       get() {
-        return Storage.getData('firstName')
+        return storage.getData('firstName');
       }
     },
     result: {
@@ -29,7 +29,7 @@ export default {
     }
   },
   created() {
-    if (!Storage.getData('email') || !Storage.getData('firstName') || !this.testCompleted) {
+    if (!storage.getData('email') || !this.firstName || !this.testCompleted) {
       this.$router.push('Accesserror');
       return;
     }

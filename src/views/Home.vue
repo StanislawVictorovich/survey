@@ -7,8 +7,8 @@ div
 </template>
 
 <script>
-import { regEmail } from '../constants'
-import Storage from '../services/Storage'
+import { regEmail } from '../constants';
+import storage from '../services/storage';
 
 export default {
   name: 'home',
@@ -19,16 +19,20 @@ export default {
       email: null
     }
   },
+  computed: {
+    validEmail: {
+      get() {
+        return regEmail.test(this.email);
+      }
+    }
+  },
   methods: {
-    validEmail() {
-      return regEmail.test(this.email);
-    },
     confirm() {
-      if (this.validEmail()) {
-        Storage.setData('email', this.email);
+      if (this.validEmail) {
+        storage.setData('email', this.email);
         this.$router.push('registration');
       } else {
-        this.error = !this.validEmail();
+        this.error = !this.validEmail;
       }
     }
   }
