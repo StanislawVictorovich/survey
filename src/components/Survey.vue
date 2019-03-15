@@ -13,6 +13,7 @@ md-steppers(:md-active-step.sync='active', md-vertical='', md-linear='')
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import storage from '../services/storage';
+import { questions, correctAnswers, incrementCorrectAnswer, completeTest } from '../constants';
 
 export default {
   data() {
@@ -25,7 +26,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['questions', 'correctAnswers']),
+    ...mapGetters([questions, correctAnswers]),
     progress: {
       get() {
         return this.progressPercents + this.progressLength;
@@ -38,7 +39,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['incrementCorrectAnswer', 'completeTest']),
+    ...mapActions([incrementCorrectAnswer, completeTest]),
     nextStep(indexOfQuestion) {
       if (!this.selectedChiose) {
         this.error = true;

@@ -1,3 +1,5 @@
+import { INCREMENT_CORRECT_ANSWER, COMPLETE_TEST } from '../constants';
+
 export default {
   state() {
     return {
@@ -58,10 +60,10 @@ export default {
   },
   actions: {
     incrementCorrectAnswer( { commit } ) {
-      commit('INCREMENT_CORRECT_ANSWER');
+      commit(INCREMENT_CORRECT_ANSWER);
     },
     completeTest( { commit } ) {
-      commit('COMPLETE_TEST');
+      commit(COMPLETE_TEST);
     }
   }
 }

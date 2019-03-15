@@ -8,20 +8,16 @@ div
 <script>
 import { mapGetters } from 'vuex';
 import storage from '../services/storage';
+import { questions, correctAnswers, testCompleted } from '../constants';
 
 export default {
   data() {
     return {
-      fakeAnswers: 3
-    }
+      firstName: storage.getData('firstName')
+    }      
   },
   computed: {
-    ...mapGetters(['questions', 'correctAnswers', 'testCompleted']),
-    firstName: {
-      get() {
-        return storage.getData('firstName');
-      }
-    },
+    ...mapGetters([questions, correctAnswers, testCompleted]),
     result: {
       get() {
         return 100 / this.questions.length * this.correctAnswers;
@@ -33,6 +29,7 @@ export default {
       this.$router.push('Accesserror');
       return;
     }
+    console.log(this.firstName);
   }
 }
 </script>
