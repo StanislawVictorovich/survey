@@ -15,7 +15,7 @@ import { mapGetters, mapActions } from 'vuex';
 import storage from '../services/storage';
 
 export default {
-  data(){
+  data() {
     return {
       id: null,
       active: null,
