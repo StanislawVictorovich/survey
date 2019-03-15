@@ -1,3 +1,13 @@
+<template lang="pug">
+div
+  h1 {{ firstName }}, here is your result
+  md-progress-spinner(md-mode='determinate', :md-value='result')
+  |  {{ result }}%
+  h3
+    | You have answered right to {{ correctAnswers }} of {{ questions.length }} questions.
+</template>
+
+<script>
 import { mapGetters } from 'vuex'
 
 export default {
@@ -16,8 +26,9 @@ export default {
   },
   created() {
     if (!this.email || !this.firstName) {
-      this.$router.push('accesserror');
+      this.$router.push('Accesserror');
       return;
     }
   }
 }
+</script>

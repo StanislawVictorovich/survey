@@ -1,3 +1,17 @@
+<template lang="pug">
+md-steppers(:md-active-step.sync='active', md-vertical='', md-linear='')
+  md-progress-bar(md-mode='determinate', :md-value='progress')
+  md-step(v-for='(question, index) of questions', :key='getId(index)', :id='getId(index)', :md-editable='false')
+    h2(v-html='question.title')
+    p
+      md-radio(v-for='choise of question.choises', :key='choise', v-model='selectedChiose', :value='choise')
+        | {{ choise }}
+    md-button.md-raised.md-primary(@click='nextStep(index)') Continue
+  md-snackbar(md-position='left', :md-duration='4000', :md-active.sync='error', md-persistent='')
+    span Please select your choise!
+</template>
+
+<script>
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
@@ -53,10 +67,11 @@ export default {
   },
   created() {
     if (!this.email || !this.firstName) {
-      this.$router.push('accesserror');
+      this.$router.push('Accesserror');
       return;
     } 
     this.id = "surv";
     this.active = this.getId(0);
   }
 }
+</script>
