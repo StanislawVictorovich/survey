@@ -9,8 +9,8 @@ div
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 import { regEmail } from '../constants'
+import UserService from '../services/User.service'
 
 export default {
   name: 'home',
@@ -22,13 +22,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['saveEmail']),
     validEmail() {
       return regEmail.test(this.email);
     },
     confirm() {
       if (this.validEmail()) {
-        this.saveEmail(this.email);
+        UserService.storage.email = this.email;
         this.$router.push('registration');
       } else {
         this.error = !this.validEmail();

@@ -13,6 +13,7 @@ md-steppers(:md-active-step.sync='active', md-vertical='', md-linear='')
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import UserService from '../services/User.service'
 
 export default {
   data(){
@@ -25,7 +26,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['questions', 'correctAnswers', 'email', 'firstName']),
+    ...mapGetters(['questions', 'correctAnswers']),
     progress: {
       get() {
         return this.progressPercents + this.progressLength;
@@ -66,7 +67,7 @@ export default {
     }
   },
   created() {
-    if (!this.email || !this.firstName) {
+    if (!UserService.storage.email || !UserService.storage.firstName) {
       this.$router.push('Accesserror');
       return;
     } 

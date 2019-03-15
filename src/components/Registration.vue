@@ -14,6 +14,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import UserService from '../services/User.service'
 
 export default {
   name: 'ErrorsMessages',
@@ -26,7 +27,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['email']),
     messageClass () {
       return {
         'md-invalid': this.hasMessages
@@ -34,12 +34,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['saveFirstName', 'saveLastName', 'saveDate']),
     submit() {
       if (this.firstName) {
-        this.saveFirstName(this.firstName);
-        this.saveLastName(this.lastName);
-        this.saveDate(this.date);
+        UserService.storage.firstName = this.firstName;
+        UserService.storage.lastName = this.lastName;
+        UserService.storage.date = this.date;
         this.$router.push('survey');
       } else {
         this.hasMessages = true;
@@ -47,7 +46,7 @@ export default {
     }
   },
   created() {
-    if (!this.email) {
+    if (!UserService.storage.email) {
       this.$router.push('Accesserror');
     } 
   }

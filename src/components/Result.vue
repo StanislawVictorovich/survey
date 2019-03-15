@@ -9,6 +9,7 @@ div
 
 <script>
 import { mapGetters } from 'vuex'
+import UserService from '../services/User.service'
 
 export default {
   data() {
@@ -17,7 +18,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['questions', 'correctAnswers', 'email', 'firstName']),
+    ...mapGetters(['questions', 'correctAnswers']),
+    firstName: {
+      get() {
+        return UserService.storage.firstName
+      }
+    },
     result: {
       get() {
         return 100 / this.questions.length * this.correctAnswers;
@@ -25,7 +31,7 @@ export default {
     }
   },
   created() {
-    if (!this.email || !this.firstName) {
+    if (!UserService.storage.email || !UserService.storage.firstName) {
       this.$router.push('Accesserror');
       return;
     }

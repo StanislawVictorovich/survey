@@ -1,7 +1,7 @@
 export default {
   state() {
     return {
-      correctAnswers: null,
+      correctAnswers: 0,
       questions: [
         {
           title: 'Чему равна длина arr.length массива arr?',
