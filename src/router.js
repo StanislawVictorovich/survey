@@ -25,12 +25,12 @@ const routes = [
   },
   {
     path: '/accesserror',
-    name: 'accesserror',
+    name: 'Accesserror',
     component: () => import('./components/AccessError.vue')
   },
   {
     path: '*',
-    redirect: '/accesserror'
+    redirect: '/Accesserror'
   }
 ]
 
