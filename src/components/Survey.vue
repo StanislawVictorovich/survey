@@ -1,13 +1,27 @@
-<template lang="pug">
-md-steppers(:md-active-step.sync='active', md-vertical='', md-linear='')
-  md-progress-bar(md-mode='determinate', :md-value='progress')
-  md-step(v-for='(question, index) of questions', :key='getId(index)', :id='getId(index)', :md-editable='false')
-    h2(v-html='question.title')
-    p
-      md-radio(v-for='choise of question.choises', :key='choise', v-model='selectedChiose', :value='choise') {{ choise }}
-    md-button.md-raised.md-primary(@click='nextStep(index)') Continue
-  md-snackbar(md-position='left', :md-duration='4000', :md-active.sync='error', md-persistent='')
-    span Please select your choise!
+<template>
+  <div>
+    <md-button class="md-raised md-primary" @click="test()">Test</md-button>
+    <md-progress-bar md-mode="determinate" :md-value="progress"></md-progress-bar>
+    <md-steppers :md-active-step.sync="active" md-linear>
+      <md-step
+        v-for="(question, index) of questions"
+        :key="getId(index)"
+        :id="getId(index)"
+        :md-error="stepError">
+          <h2 v-html="question.title"></h2>
+          <p>
+            <md-radio 
+              v-for="choise of question.choises" 
+              :key="choise" 
+              v-model="selectedChiose" 
+              :value="choise">{{ choise }}
+            </md-radio>
+          </p>
+          <md-button class="md-raised md-primary" @click="nextStep(index)">Continue</md-button>
+      </md-step>
+    <md-snackbar md-position="left" :md-duration="4000" :md-active.sync="error" md-persistent=""><span>Please select your choise!</span></md-snackbar>
+    </md-steppers>
+  </div>
 </template>
 
 <script>
@@ -22,17 +36,18 @@ export default {
       active: null,
       progressPercents: null,
       selectedChiose: null,
-      error: false
+      error: false,
+      stepError: null //this.stepError = 'Please, chose your answer!'
     }
   },
   computed: {
     ...mapGetters([constants.questions, constants.correctAnswers]),
     progress: {
       get() {
-        return this.progressPercents + this.progressLength;
+        return this.progressPercents + this.oneStepProgressPercent;
       }
     },
-    progressLength: {
+    oneStepProgressPercent: {
       get() {
         return 100 / this.questions.length;
       }
@@ -50,10 +65,11 @@ export default {
       }
       if (indexOfQuestion >= this.questions.length - 1) {
         this.completeTest();
-        this.$router.push('result');
+        this.$router.push('Result');
         return;
       }
       this.incrementProgress();
+      this.saveSurveySession();
       this.selectedChiose = null;
       this.active = this.getId(indexOfQuestion+1);
     },
@@ -61,19 +77,29 @@ export default {
       return this.questions[indexOfQuestion].choises.indexOf(this.selectedChiose) === this.questions[indexOfQuestion].correct;
     },
     incrementProgress() {
-      this.progressPercents += this.progressLength;
+      this.progressPercents += this.oneStepProgressPercent;
+    },
+    saveSurveySession() {
+      storage.setUserData( { session: this.active } );
+    },
+    restoreSurveySession() {
+      this.active = storage.getUserData().session;// || this.getId(constants.SURV_ID);
+    },
+    test() {
+      console.log(this.active);
+      this.active = constants.SURV_ID;
     },
     getId(index) {
         return `${this.id}${index}`;
     }
   },
   created() {
-    if (!storage.getData('email') || !storage.getData('firstName')) {
+    if (!storage.getUserData().email || !storage.getUserData().firstName ) {
       this.$router.push('Accesserror');
-      return;
-    } 
-    this.id = "surv";
+    }
+    this.id = 'surv',
     this.active = this.getId(0);
+    this.restoreSurveySession();
   }
-}
+} 
 </script>
