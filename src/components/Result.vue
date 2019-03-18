@@ -1,7 +1,7 @@
 <template lang="pug">
 div
   h1 {{ firstName }}, here is your result
-  md-progress-spinner(md-mode='determinate', :md-value='result') {{ result }}%
+  md-progress-spinner(md-mode="determinate", :md-value="result") {{ result }}%
   h3 You have answered right to {{ correctAnswers }} of {{ questions.length }} questions.
 </template>
 
@@ -13,7 +13,7 @@ import constants from '../types/constants';
 export default {
   data() {
     return {
-      firstName: storage.getData('firstName')
+      firstName: storage.getUserData().firstName
     }      
   },
   computed: {
@@ -25,11 +25,9 @@ export default {
     }
   },
   created() {
-    if (!storage.getData('email') || !this.firstName || !this.testCompleted) {
+    if (!storage.getUserData().email || !this.firstName || !this.testCompleted) {
       this.$router.push('Accesserror');
-      return;
     }
-    console.log(this.firstName);
   }
 }
 </script>
