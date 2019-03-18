@@ -4,18 +4,19 @@ md-steppers(:md-active-step.sync='active', md-vertical='', md-linear='')
   md-step(v-for='(question, index) of questions', :key='getId(index)', :id='getId(index)', :md-editable='false')
     h2(v-html='question.title')
     p
-      md-radio(v-for='choise of question.choises', :key='choise', v-model='selectedChiose', :value='choise')
-        | {{ choise }}
+      md-radio(v-for='choise of question.choises', :key='choise', v-model='selectedChiose', :value='choise') {{ choise }}
     md-button.md-raised.md-primary(@click='nextStep(index)') Continue
   md-snackbar(md-position='left', :md-duration='4000', :md-active.sync='error', md-persistent='')
     span Please select your choise!
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex';
+import storage from '../services/storage';
+import constants from '../types/constants';
 
 export default {
-  data(){
+  data() {
     return {
       id: null,
       active: null,
@@ -25,7 +26,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['questions', 'correctAnswers', 'email', 'firstName']),
+    ...mapGetters([constants.questions, constants.correctAnswers]),
     progress: {
       get() {
         return this.progressPercents + this.progressLength;
@@ -38,7 +39,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['incrementCorrectAnswer']),
+    ...mapActions([constants.incrementCorrectAnswer, constants.completeTest]),
     nextStep(indexOfQuestion) {
       if (!this.selectedChiose) {
         this.error = true;
@@ -48,6 +49,7 @@ export default {
         this.incrementCorrectAnswer();
       }
       if (indexOfQuestion >= this.questions.length - 1) {
+        this.completeTest();
         this.$router.push('result');
         return;
       }
@@ -66,7 +68,7 @@ export default {
     }
   },
   created() {
-    if (!this.email || !this.firstName) {
+    if (!storage.getData('email') || !storage.getData('firstName')) {
       this.$router.push('Accesserror');
       return;
     } 

@@ -1,38 +1,8 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Home from './views/Home.vue'
+import Vue from 'vue';
+import Router from 'vue-router';
+import constants from './types/constants';
 
-const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/registration',
-    name: 'Registration',
-    component: () => import('./components/Registration.vue')
-  },
-  {
-    path: '/survey',
-    name: 'Survey',
-    component: () => import('./components/Survey.vue')
-  },
-  {
-    path: '/result',
-    name: 'Result',
-    component: () => import('./components/Result.vue')
-  },
-  {
-    path: '/accesserror',
-    name: 'accesserror',
-    component: () => import('./components/AccessError.vue')
-  },
-  {
-    path: '*',
-    redirect: '/accesserror'
-  }
-]
+const routes = constants.routes;
 
 Vue.use(Router)
 

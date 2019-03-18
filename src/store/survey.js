@@ -1,7 +1,10 @@
+import constants from '../types/constants';
+
 export default {
   state() {
     return {
-      correctAnswers: null,
+      correctAnswers: 0,
+      testCompleted: false,
       questions: [
         {
           title: 'Чему равна длина arr.length массива arr?',
@@ -43,17 +46,24 @@ export default {
     }
   },
   getters: {
-    questions: state => state.questions,
-    correctAnswers: state => state.correctAnswers
+    correctAnswers: state => state.correctAnswers,
+    testCompleted: state => state.testCompleted,
+    questions: state => state.questions
   },
   mutations: {
     INCREMENT_CORRECT_ANSWER(state) {
       state.correctAnswers += 1;
+    },
+    COMPLETE_TEST(state) {
+      state.testCompleted = true;
     }
   },
   actions: {
     incrementCorrectAnswer( { commit } ) {
-      commit('INCREMENT_CORRECT_ANSWER');
+      commit(constants.INCREMENT_CORRECT_ANSWER);
+    },
+    completeTest( { commit } ) {
+      commit(constants.COMPLETE_TEST);
     }
   }
 }
