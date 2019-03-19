@@ -1,27 +1,23 @@
-<template>
-  <div>
-    <md-button class="md-raised md-primary" @click="test()">Test</md-button>
-    <md-progress-bar md-mode="determinate" :md-value="progress"></md-progress-bar>
-    <md-steppers :md-active-step.sync="active" md-linear>
-      <md-step
-        v-for="(question, index) of questions"
-        :key="getId(index)"
-        :id="getId(index)"
-        :md-error="stepError">
-          <h2 v-html="question.title"></h2>
-          <p>
-            <md-radio 
-              v-for="choise of question.choises" 
-              :key="choise" 
-              v-model="selectedChiose" 
-              :value="choise">{{ choise }}
-            </md-radio>
-          </p>
-          <md-button class="md-raised md-primary" @click="nextStep(index)">Continue</md-button>
-      </md-step>
-    <md-snackbar md-position="left" :md-duration="4000" :md-active.sync="error" md-persistent=""><span>Please select your choise!</span></md-snackbar>
-    </md-steppers>
-  </div>
+<template lang="pug">
+div
+  md-button.md-raised.md-primary(@click="test()") Test
+  md-progress-bar(md-mode="determinate", :md-value="progress")
+  md-steppers(:md-active-step.sync="active", md-linear="")
+    md-step(
+      v-for="(question, index) of questions", 
+      :key="getId(index)", 
+      :id="getId(index)", 
+      :md-error="stepError")
+        h2(v-html="question.title")
+        p
+          md-radio(
+            v-for="choise of question.choises", 
+            :key="choise", 
+            v-model="selectedChiose", 
+            :value="choise") {{ choise }}
+        md-button.md-raised.md-primary(@click="nextStep(index)") Continue
+        md-snackbar(md-position="left", :md-duration="4000", :md-active.sync="error", md-persistent="")
+          span Please select your choise!
 </template>
 
 <script>
@@ -94,7 +90,10 @@ export default {
     }
   },
   created() {
-    if (!storage.getUserData().email || !storage.getUserData().firstName ) {
+    try {
+      storage.getUserData().email;
+      storage.getUserData().firstName;
+    } catch {
       this.$router.push('Accesserror');
     }
     this.id = 'surv',
