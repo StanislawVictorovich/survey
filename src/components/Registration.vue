@@ -48,7 +48,9 @@ export default {
     }
   },
   created() {
-    if (!storage.getUserData().email) {
+    try {
+      storage.getUserData().email;
+    } catch {
       this.$router.push('Accesserror');
     }
   }
