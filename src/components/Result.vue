@@ -13,21 +13,38 @@ import constants from '../types/constants';
 export default {
   data() {
     return {
-      firstName: storage.getUserData().firstName
+      firstName: '',
+      email: '',
+      correctAnswers: 0,
+      answersMatrix: []
     }      
   },
   computed: {
-    ...mapGetters([constants.questions, constants.correctAnswers, constants.testCompleted]),
+    ...mapGetters([constants.questions]),
     result: {
       get() {
         return 100 / this.questions.length * this.correctAnswers;
       }
     }
   },
+  methods: {
+    calculcateCorrectAnsers() {
+      this.questions.forEach((item, i) => {       
+        if (item.correct === this.answersMatrix[i]) {
+          this.correctAnswers += 1;
+        } 
+      });
+    }
+  },
   created() {
-    if (!storage.getUserData().email || !this.firstName || !this.testCompleted) {
+    try {
+      this.firstName = storage.getUserData().firstName;
+      this.email = storage.getUserData().email;
+      this.answersMatrix = storage.getUserData().answersMatrix;
+    } catch {
       this.$router.push('Accesserror');
     }
+    this.calculcateCorrectAnsers();
   }
 }
 </script>
