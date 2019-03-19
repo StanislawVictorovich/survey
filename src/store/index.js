@@ -7,8 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state() {
     return {
-      correctAnswers: 0,
-      testCompleted: false,
+/*       correctAnswers: 0,
+      testCompleted: false, */
       questions: [
         {
           title: `What will this code outputs? <br>
@@ -65,10 +65,10 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    correctAnswers: state => state.correctAnswers,
-    testCompleted: state => state.testCompleted,
+/*     correctAnswers: state => state.correctAnswers,
+    testCompleted: state => state.testCompleted, */
     questions: state => state.questions
-  },
+  },/* 
   mutations: {
     INCREMENT_CORRECT_ANSWER(state) {
       state.correctAnswers += 1;
@@ -84,6 +84,6 @@ export default new Vuex.Store({
     completeTest( { commit } ) {
       commit(types.COMPLETE_TEST);
     }
-  },
+  }, */
   strict: process.env.NODE_ENV !== types.PRODUCTION_MODE
 })
