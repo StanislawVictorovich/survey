@@ -1,6 +1,5 @@
 <template lang="pug">
 div
-  md-button.md-raised.md-primary(@click="test()") Test
   md-progress-bar(md-mode="determinate", :md-value="progress")
   md-steppers(:md-active-step.sync="active", md-linear="")
     md-step(
@@ -81,10 +80,6 @@ export default {
     restoreSurveySession() {
       this.active = storage.getUserData().session;
     },
-    test() {
-      console.log(this.active);
-      this.active = constants.SURV_ID;
-    },
     getId(index) {
         return `${this.id}${index}`;
     }
@@ -96,7 +91,7 @@ export default {
     } catch {
       this.$router.push('Accesserror');
     }
-    this.id = 'surv',
+    this.id = constants.SURV_ID;
     this.active = this.getId(0);
     this.restoreSurveySession();
   }
