@@ -1,13 +1,4 @@
 export default {
-  setData(key, value) {
-    localStorage.setItem(key, value);
-  },
-  getData(key) {
-    return localStorage.getItem(key);
-  },
-  clear() {
-    localStorage.clear();
-  },
   storage_id: 'user_data',
   setUserData(user) {
     const storedUser = this.getUserData();
@@ -20,5 +11,8 @@ export default {
   },
   getUserData() {
     return JSON.parse(localStorage.getItem(this.storage_id));
+  },
+  clear() {
+    localStorage.clear();
   }
 }
