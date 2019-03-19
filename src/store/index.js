@@ -7,8 +7,6 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state() {
     return {
-/*       correctAnswers: 0,
-      testCompleted: false, */
       questions: [
         {
           title: `What will this code outputs? <br>
@@ -65,25 +63,8 @@ export default new Vuex.Store({
     }
   },
   getters: {
-/*     correctAnswers: state => state.correctAnswers,
-    testCompleted: state => state.testCompleted, */
+
     questions: state => state.questions
-  },/* 
-  mutations: {
-    INCREMENT_CORRECT_ANSWER(state) {
-      state.correctAnswers += 1;
-    },
-    COMPLETE_TEST(state) {
-      state.testCompleted = true;
-    }
   },
-  actions: {
-    incrementCorrectAnswer( { commit } ) {
-      commit(types.INCREMENT_CORRECT_ANSWER);
-    },
-    completeTest( { commit } ) {
-      commit(types.COMPLETE_TEST);
-    }
-  }, */
   strict: process.env.NODE_ENV !== types.PRODUCTION_MODE
 })
