@@ -76,7 +76,7 @@ export default {
       this.survey.currentStep = storage.getUserData().currentStep;
       this.survey.answersMatrix = storage.getUserData().answersMatrix;
       this.survey.testComplete = storage.getUserData().testComplete;
-      this.active = this.getIdOfElementByIndex(this.survey.currentStep);
+      this.active = this.getIdOfElementByIndex(this.survey.currentStep || 0);
     },
     getIdOfElementByIndex(index) {
         return `${this.id}${index}`;
