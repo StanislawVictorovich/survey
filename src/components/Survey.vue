@@ -79,7 +79,7 @@ export default {
       storage.setUserData( { session: this.active } );
     },
     restoreSurveySession() {
-      this.active = storage.getUserData().session;// || this.getId(constants.SURV_ID);
+      this.active = storage.getUserData().session;
     },
     test() {
       console.log(this.active);
