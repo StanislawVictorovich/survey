@@ -1,6 +1,5 @@
 <template lang="pug">
 div
-  md-button.md-raised.md-primary(@click="test()") Сброс
   md-progress-bar(md-mode="determinate", :md-value="progress")
   md-steppers(:md-active-step.sync="active", md-linear="")
     md-step(
@@ -81,14 +80,6 @@ export default {
     },
     getIdOfElementByIndex(index) {
         return `${this.id}${index}`;
-    },
-    test() {
-      this.survey.currentStep = -1;
-      this.survey.answersMatrix = [];
-      this.survey.testComplete = -1;
-      storage.setUserData(this.survey);
-      this.restoreSurveySession();
-      this.updateProgress();
     }
   },
   created() {
