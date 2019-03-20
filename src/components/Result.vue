@@ -3,6 +3,7 @@ div
   h1 {{ firstName }}, here is your result
   md-progress-spinner(md-mode="determinate", :md-value="result") {{ result }}%
   h3 You have answered right to {{ correctAnswers }} of {{ questions.length }} questions.
+  md-button.md-primary(@click="start") Take the test again
 </template>
 
 <script>
@@ -36,6 +37,14 @@ export default {
         } 
 
       });
+    },
+    start() {
+      storage.setUserData({ 
+        currentStep: 0,
+        testComplete: false,
+        answersMatrix: [] 
+      });
+      this.$router.push({ name: 'Survey' });
     }
   },
   created() {
@@ -46,9 +55,10 @@ export default {
       this.$router.push({ name: 'Accesserror' });
     }
 
-    this.firstName = storage.getUserData().firstName;
-    this.email = storage.getUserData().email;
-    this.answersMatrix = storage.getUserData().answersMatrix;
+    this.firstName = firstName;
+    this.email = email;
+    this.answersMatrix = answersMatrix;
+
     this.calculcateCorrectAnsers();
   }
 }
