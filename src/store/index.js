@@ -75,6 +75,7 @@ export default new Vuex.Store({
     },
     RESTORE_QUESTIONS(state) {
       const { questions } = storage.getUserData();
+      
       if (questions) {
         state.questions = questions;
       }
