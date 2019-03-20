@@ -1,9 +1,13 @@
 <template lang="pug">
 div
   h1 {{ firstName }}, here is your result
-  md-progress-spinner(md-mode="determinate", :md-value="result") {{ result }}%
+  md-progress-spinner(
+    md-mode='determinate', 
+    :md-value='result'
+    )
+  | {{ result }}%
   h3 You have answered right to {{ correctAnswers }} of {{ questions.length }} questions.
-  md-button.md-primary(@click="start") Take the test again
+  md-button.md-primary(@click='start') Take the test again
 </template>
 
 <script>
@@ -22,10 +26,8 @@ export default {
   },
   computed: {
     ...mapGetters([types.questions]),
-    result: {
-      get() {
-        return 100 / this.questions.length * this.correctAnswers;
-      }
+    result() {
+        return Math.floor(100 / this.questions.length * this.correctAnswers);
     }
   },
   methods: {
