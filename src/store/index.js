@@ -60,6 +60,42 @@ export default new Vuex.Store({
           ],
           correct: 0
         },
+        {
+          title: `Which of the objects has <code>'name'?</code>`,
+          choises: [
+            'vasya.__proto__', 'vasya.prototype', 'User.__proto__'
+          ],
+          correct: 0
+        },
+        {
+          title: `Does the function executed clear of the code below?<br><code>sayHi();<br><br>function sayHi() {<br>
+          alert("Hello");<br>} </code>`,
+          choises: [
+            'Yes', 'No, declaration must be first'
+          ],
+          correct: 0
+        },
+        {
+          title: `What the result will be of the expression below?<br>0 || 1 && 2 || 3</code>`,
+          choises: [
+            '0', '1', '2', '3', '4', '5', 'false'
+          ],
+          correct: 2
+        },
+        {
+          title: `What is the variable equal to of the code below?<br><code>let name = "pupkin".replace("p", "d")</code>`,
+          choises: [
+            'pupkin', 'pudkin', 'dupkin', 'dudkin'
+          ],
+          correct: 2
+        },
+        {
+          title: `Is there any difference between expressions??<br><code>!!( a && b )<br>(a && b)</code>`,
+          choises: [
+            'yes', 'no', 'what is the .... "!!"????'
+          ],
+          correct: 1
+        },
       ]
     }
   },
