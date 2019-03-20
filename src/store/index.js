@@ -63,7 +63,6 @@ export default new Vuex.Store({
     }
   },
   getters: {
-
     questions: state => state.questions
   },
   strict: process.env.NODE_ENV !== types.PRODUCTION_MODE
