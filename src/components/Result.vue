@@ -7,7 +7,7 @@ div
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import storage from '../services/storage';
 import types from '../store/types';
 
@@ -29,6 +29,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions([types.randomizeQuestions, types.saveQuestions]),
     calculcateCorrectAnsers() {
       this.questions.forEach((item, i) => {       
 
@@ -44,6 +45,8 @@ export default {
         testComplete: false,
         answersMatrix: [] 
       });
+      this.randomizeQuestions();
+      this.saveQuestions();
       this.$router.push({ name: 'Survey' });
     }
   },

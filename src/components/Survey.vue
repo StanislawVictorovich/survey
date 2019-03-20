@@ -20,7 +20,7 @@ div
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import storage from '../services/storage';
 import types from '../store/types';
 import constants from '../types/constants';
@@ -50,6 +50,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions([types.randomizeQuestions, types.saveQuestions, types.restoreQuestions]),
     nextStep(indexOfQuestion) {
 
       if (!this.selectedChiose) {
@@ -60,9 +61,7 @@ export default {
       this.survey.answersMatrix[indexOfQuestion] = this.questions[indexOfQuestion].choises.indexOf(this.selectedChiose);
 
       if (indexOfQuestion >= this.questions.length - 1) {
-        storage.setUserData({ testComplete: true });
         this.$router.push({ name: 'Result' });
-        return;
       }
 
       this.survey.currentStep = indexOfQuestion + 1;
@@ -75,6 +74,9 @@ export default {
       this.progressPercents = storage.getUserData().currentStep * this.oneStepProgressPercent;
     },
     restoreSurveySession() {
+      this.restoreQuestions();
+      this.updateProgress();
+
       const { currentStep, answersMatrix, testComplete } = storage.getUserData();
       this.survey.currentStep = currentStep || 0;
       this.survey.answersMatrix = answersMatrix || [];
@@ -86,10 +88,15 @@ export default {
     }
   },
   created() {
-    const { email, firstName, testComplete } = storage.getUserData();
+    const { email, firstName, testComplete, questions } = storage.getUserData();
 
     if(!email || !firstName || testComplete) {
       this.$router.push({ name: 'Accesserror' });
+    }
+
+    if(!questions) {
+      this.randomizeQuestions();
+      this.saveQuestions();
     }
 
     this.id = constants.SURV_ID;
