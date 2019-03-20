@@ -14,7 +14,7 @@ export default {
     localStorage.setItem(this.storage_id, JSON.stringify(user));
   },
   getUserData() {
-    return JSON.parse(localStorage.getItem(this.storage_id)) || false;
+    return JSON.parse(localStorage.getItem(this.storage_id)) || {};
   },
   clear() {
     localStorage.clear();
