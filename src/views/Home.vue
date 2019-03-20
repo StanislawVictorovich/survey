@@ -43,7 +43,7 @@ export default {
     confirm() {
 
       if (this.validEmail) {
-        storage.setUserData( { email: this.email });
+        storage.setUserData({ email: this.email });
         this.$router.push({ name: 'Registration'});
       } else {
         this.error = !this.validEmail;
