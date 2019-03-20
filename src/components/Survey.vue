@@ -1,18 +1,28 @@
 <template lang="pug">
-md-steppers(:md-active-step.sync='active', md-vertical='', md-linear='')
-  md-progress-bar(md-mode='determinate', :md-value='progress')
-  md-step(v-for='(question, index) of questions', :key='getId(index)', :id='getId(index)', :md-editable='false')
-    h2(v-html='question.title')
-    p
-      md-radio(v-for='choise of question.choises', :key='choise', v-model='selectedChiose', :value='choise') {{ choise }}
-    md-button.md-raised.md-primary(@click='nextStep(index)') Continue
-  md-snackbar(md-position='left', :md-duration='4000', :md-active.sync='error', md-persistent='')
-    span Please select your choise!
+div
+  md-progress-bar(md-mode="determinate", :md-value="progress")
+  md-steppers(:md-active-step.sync="active", md-linear="")
+    md-step(
+      v-for="(question, index) of questions", 
+      :key="getIdOfElementByIndex(index)", 
+      :id="getIdOfElementByIndex(index)")
+        h2(v-html="question.title"
+      )
+        p
+          md-radio(
+            v-for="choise of question.choises", 
+            :key="choise", 
+            v-model="selectedChiose", 
+            :value="choise") {{ choise }}
+        md-button.md-raised.md-primary(@click="nextStep(index)") Continue
+    md-snackbar(md-position="left", :md-duration="4000", :md-active.sync="error", md-persistent="")
+      span Please select your choise!
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
 import storage from '../services/storage';
+import types from '../store/types';
 import constants from '../types/constants';
 
 export default {
@@ -22,58 +32,70 @@ export default {
       active: null,
       progressPercents: null,
       selectedChiose: null,
-      error: false
+      error: false,
+      survey: {
+        currentStep: 0,
+        answersMatrix: [],
+        testComplete: false
+      }
     }
   },
   computed: {
-    ...mapGetters([constants.questions, constants.correctAnswers]),
-    progress: {
-      get() {
-        return this.progressPercents + this.progressLength;
-      }
+    ...mapGetters([types.questions]),
+    progress() {
+        return this.progressPercents + this.oneStepProgressPercent;
     },
-    progressLength: {
-      get() {
+    oneStepProgressPercent() {
         return 100 / this.questions.length;
-      }
     }
   },
   methods: {
-    ...mapActions([constants.incrementCorrectAnswer, constants.completeTest]),
     nextStep(indexOfQuestion) {
+
       if (!this.selectedChiose) {
         this.error = true;
         return;
       }
-      if (this.checkCorrectAnswer(indexOfQuestion)) {
-        this.incrementCorrectAnswer();
-      }
+
+      this.survey.answersMatrix[indexOfQuestion] = this.questions[indexOfQuestion].choises.indexOf(this.selectedChiose);
+
       if (indexOfQuestion >= this.questions.length - 1) {
-        this.completeTest();
-        this.$router.push('result');
+        storage.setUserData({ testComplete: true });
+        this.$router.push({ name: 'Result' });
         return;
       }
-      this.incrementProgress();
+
+      this.survey.currentStep = indexOfQuestion + 1;
+      storage.setUserData(this.survey);
       this.selectedChiose = null;
-      this.active = this.getId(indexOfQuestion+1);
+      this.active = this.getIdOfElementByIndex(this.survey.currentStep);
+      this.updateProgress();
     },
-    checkCorrectAnswer(indexOfQuestion) {
-      return this.questions[indexOfQuestion].choises.indexOf(this.selectedChiose) === this.questions[indexOfQuestion].correct;
+    updateProgress() {
+      this.progressPercents = storage.getUserData().currentStep * this.oneStepProgressPercent;
     },
-    incrementProgress() {
-      this.progressPercents += this.progressLength;
+    restoreSurveySession() {
+      this.survey.currentStep = storage.getUserData().currentStep || 0;
+      this.survey.answersMatrix = storage.getUserData().answersMatrix || [];
+      this.survey.testComplete = storage.getUserData().testComplete || false;
+      this.active = this.getIdOfElementByIndex(this.survey.currentStep || 0);
     },
-    getId(index) {
+    getIdOfElementByIndex(index) {
         return `${this.id}${index}`;
     }
   },
   created() {
-    if (!storage.getData('email') || !storage.getData('firstName')) {
-      this.$router.push('Accesserror');
-      return;
-    } 
-    this.id = "surv";
-    this.active = this.getId(0);
+    const { email, firstName, testComplete } = storage.getUserData();
+
+    if(!email || !firstName || testComplete) {
+      this.$router.push({ name: 'Accesserror' });
+    }
+
+    this.id = constants.SURV_ID;
+    this.active = this.getIdOfElementByIndex(constants.START_INDEX_ELEMENT);
+
+    this.restoreSurveySession();
+    this.updateProgress();
   }
-}
+} 
 </script>

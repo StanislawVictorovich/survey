@@ -1,8 +1,21 @@
 <template lang="pug">
 div
-  md-dialog-prompt(:md-active.sync='active', v-model='email', md-title='Enter your email', md-input-maxlength='30', md-input-placeholder='Type your email...', md-confirm-text='Done', @md-confirm='confirm')
-  md-button.md-primary.md-raised(@click='active = true') Start
-  md-snackbar(md-position='left', :md-duration='4000', :md-active.sync='error', md-persistent='')
+  md-dialog-prompt(
+    :md-active="active", 
+    v-model="email", 
+    md-title="Enter your email", 
+    md-input-maxlength="30", 
+    md-input-placeholder="Type your email...", 
+    md-confirm-text="Done", 
+    @md-confirm="confirm" 
+    @md-cancel="cancel"
+)
+  md-button.md-primary.md-raised(@click="active = true") Start
+  md-snackbar(
+    md-position="left", 
+    :md-duration="4000", 
+    :md-active.sync="error", 
+    md-persistent="")
     span Please enter a valid email address!
 </template>
 
@@ -12,7 +25,7 @@ import storage from '../services/storage';
 
 export default {
   name: 'home',
-  data(){
+  data() {
     return {
       active: false,
       error: false,
@@ -28,12 +41,18 @@ export default {
   },
   methods: {
     confirm() {
+
       if (this.validEmail) {
-        storage.setData('email', this.email);
-        this.$router.push('registration');
+        storage.setUserData( { email: this.email });
+        this.$router.push({ name: 'Registration'});
       } else {
         this.error = !this.validEmail;
+        this.active = true;
       }
+
+    },
+    cancel() {
+      this.active = false;
     }
   }
 }
