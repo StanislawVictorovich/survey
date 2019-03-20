@@ -5,7 +5,7 @@ export default {
 
     for (let key in storedUser) {
       
-      if (!user[key]) {
+      if (user[key] === undefined) {
         user[key] = storedUser[key];
       }
       
