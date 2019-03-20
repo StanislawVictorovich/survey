@@ -8,4 +8,5 @@ export default {
   incrementCorrectAnswer: 'incrementCorrectAnswer',
   completeTest: 'completeTest',
   SURV_ID: 'surv',
+  START_INDEX_ELEMENT: 0
 }
