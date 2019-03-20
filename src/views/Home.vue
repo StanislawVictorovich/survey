@@ -41,13 +41,15 @@ export default {
   },
   methods: {
     confirm() {
+
       if (this.validEmail) {
         storage.setUserData( { email: this.email });
-        this.$router.push('Registration');
+        this.$router.push({ name: 'Registration'});
       } else {
         this.error = !this.validEmail;
         this.active = true;
       }
+
     },
     cancel() {
       this.active = false;
