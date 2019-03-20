@@ -75,9 +75,10 @@ export default {
       this.progressPercents = storage.getUserData().currentStep * this.oneStepProgressPercent;
     },
     restoreSurveySession() {
-      this.survey.currentStep = storage.getUserData().currentStep || 0;
-      this.survey.answersMatrix = storage.getUserData().answersMatrix || [];
-      this.survey.testComplete = storage.getUserData().testComplete || false;
+      const { currentStep, answersMatrix, testComplete } = storage.getUserData();
+      this.survey.currentStep = currentStep || 0;
+      this.survey.answersMatrix = answersMatrix || [];
+      this.survey.testComplete = testComplete || false;
       this.active = this.getIdOfElementByIndex(this.survey.currentStep || 0);
     },
     getIdOfElementByIndex(index) {
