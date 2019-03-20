@@ -39,18 +39,23 @@ export default {
   },
   methods: {
     submit() {
+
       if (this.user.firstName) {
         storage.setUserData(this.user);
-        this.$router.push('Survey');
+        this.$router.push({ name: 'Survey' });
       } else {
         this.showErrorHint = true;
       }
+
     }
   },
   created() {
-    if (!storage.getUserData().email) {
-      this.$router.push('Accesserror');
+    const { email } = storage.getUserData();
+
+    if (!email) {
+      this.$router.push({ name: 'Accesserror' });
     }
+
   }
 }
 </script>

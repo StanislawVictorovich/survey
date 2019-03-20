@@ -8,7 +8,7 @@ div
 <script>
 import { mapGetters } from 'vuex';
 import storage from '../services/storage';
-import constants from '../types/constants';
+import types from '../store/types';
 
 export default {
   data() {
@@ -20,7 +20,7 @@ export default {
     }      
   },
   computed: {
-    ...mapGetters([constants.questions]),
+    ...mapGetters([types.questions]),
     result: {
       get() {
         return 100 / this.questions.length * this.correctAnswers;
@@ -30,16 +30,22 @@ export default {
   methods: {
     calculcateCorrectAnsers() {
       this.questions.forEach((item, i) => {       
+
         if (item.correct === this.answersMatrix[i]) {
           this.correctAnswers += 1;
         } 
+
       });
     }
   },
   created() {
-    if (!storage.getUserData().firstName || !storage.getUserData().email || !storage.getUserData().answersMatrix) {
-      this.$router.push('Accesserror');
+
+    const { email, firstName, answersMatrix } = storage.getUserData();
+
+    if (!firstName || !email || !answersMatrix) {
+      this.$router.push({ name: 'Accesserror' });
     }
+
     this.firstName = storage.getUserData().firstName;
     this.email = storage.getUserData().email;
     this.answersMatrix = storage.getUserData().answersMatrix;

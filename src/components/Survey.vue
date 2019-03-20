@@ -6,7 +6,8 @@ div
       v-for="(question, index) of questions", 
       :key="getIdOfElementByIndex(index)", 
       :id="getIdOfElementByIndex(index)")
-        h2(v-html="question.title")
+        h2(v-html="question.title"
+      )
         p
           md-radio(
             v-for="choise of question.choises", 
@@ -21,6 +22,7 @@ div
 <script>
 import { mapGetters } from 'vuex';
 import storage from '../services/storage';
+import types from '../store/types';
 import constants from '../types/constants';
 
 export default {
@@ -39,30 +41,30 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([constants.questions]),
-    progress: {
-      get() {
+    ...mapGetters([types.questions]),
+    progress() {
         return this.progressPercents + this.oneStepProgressPercent;
-      }
     },
-    oneStepProgressPercent: {
-      get() {
+    oneStepProgressPercent() {
         return 100 / this.questions.length;
-      }
     }
   },
   methods: {
     nextStep(indexOfQuestion) {
+
       if (!this.selectedChiose) {
         this.error = true;
         return;
       }
+
       this.survey.answersMatrix[indexOfQuestion] = this.questions[indexOfQuestion].choises.indexOf(this.selectedChiose);
+
       if (indexOfQuestion >= this.questions.length - 1) {
-        storage.setUserData( { testComplete: true } );
-        this.$router.push('Result');
+        storage.setUserData({ testComplete: true });
+        this.$router.push({ name: 'Result' });
         return;
       }
+
       this.survey.currentStep = indexOfQuestion + 1;
       storage.setUserData(this.survey);
       this.selectedChiose = null;
@@ -83,11 +85,15 @@ export default {
     }
   },
   created() {
-    if(!storage.getUserData().email || !storage.getUserData().firstName || storage.getUserData().testComplete) {
-      this.$router.push('Accesserror');
+    const { email, firstName, testComplete } = storage.getUserData();
+
+    if(!email || !firstName || testComplete) {
+      this.$router.push({ name: 'Accesserror' });
     }
+
     this.id = constants.SURV_ID;
-    this.active = this.getIdOfElementByIndex(0);
+    this.active = this.getIdOfElementByIndex(constants.START_INDEX_ELEMENT);
+
     this.restoreSurveySession();
     this.updateProgress();
   }
