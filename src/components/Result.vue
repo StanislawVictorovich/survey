@@ -37,13 +37,12 @@ export default {
     }
   },
   created() {
-    try {
-      this.firstName = storage.getUserData().firstName;
-      this.email = storage.getUserData().email;
-      this.answersMatrix = storage.getUserData().answersMatrix;
-    } catch {
+    if (!storage.getUserData().firstName || !storage.getUserData().email || !storage.getUserData().answersMatrix) {
       this.$router.push('Accesserror');
     }
+    this.firstName = storage.getUserData().firstName;
+    this.email = storage.getUserData().email;
+    this.answersMatrix = storage.getUserData().answersMatrix;
     this.calculcateCorrectAnsers();
   }
 }

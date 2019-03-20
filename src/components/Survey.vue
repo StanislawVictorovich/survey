@@ -39,7 +39,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([constants.questions, constants.correctAnswers]),
+    ...mapGetters([constants.questions]),
     progress: {
       get() {
         return this.progressPercents + this.oneStepProgressPercent;
@@ -73,9 +73,9 @@ export default {
       this.progressPercents = storage.getUserData().currentStep * this.oneStepProgressPercent;
     },
     restoreSurveySession() {
-      this.survey.currentStep = storage.getUserData().currentStep;
-      this.survey.answersMatrix = storage.getUserData().answersMatrix;
-      this.survey.testComplete = storage.getUserData().testComplete;
+      this.survey.currentStep = storage.getUserData().currentStep || 0;
+      this.survey.answersMatrix = storage.getUserData().answersMatrix || [];
+      this.survey.testComplete = storage.getUserData().testComplete || false;
       this.active = this.getIdOfElementByIndex(this.survey.currentStep || 0);
     },
     getIdOfElementByIndex(index) {
@@ -83,10 +83,7 @@ export default {
     }
   },
   created() {
-    try {
-      storage.getUserData().email;
-      storage.getUserData().firstName;
-    } catch {
+    if(!storage.getUserData().email || !storage.getUserData().firstName || storage.getUserData().testComplete) {
       this.$router.push('Accesserror');
     }
     this.id = constants.SURV_ID;
