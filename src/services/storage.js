@@ -1,4 +1,5 @@
 import SecureLS from 'secure-ls';
+import types from './types';
 
 class SecureStorage {
   constructor(key) {
@@ -28,4 +29,4 @@ class SecureStorage {
   }
 }
 
-export default new SecureStorage('user_data');
+export default new SecureStorage(types.SECURE_KEY);
