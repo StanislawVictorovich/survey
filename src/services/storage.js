@@ -1,22 +1,31 @@
-export default {
-  storage_id: 'user_data',
+import SecureLS from 'secure-ls';
+
+class SecureStorage {
+  constructor(key) {
+    this.storage_id = key;
+    this.secureStorage = new SecureLS({encodingType: 'base64', isCompression: true});
+  };
   setUserData(user) {
     const storedUser = this.getUserData();
 
     for (let key in storedUser) {
-      
-      if (user[key] === undefined) {
+      if (!user[key]) {
         user[key] = storedUser[key];
       }
-      
     }
 
-    localStorage.setItem(this.storage_id, JSON.stringify(user));
-  },
+    this.secureStorage.set(this.storage_id, JSON.stringify(user));
+  };
   getUserData() {
-    return JSON.parse(localStorage.getItem(this.storage_id)) || {};
-  },
-  clear() {
-    localStorage.clear();
+    try {
+      return JSON.parse(this.secureStorage.get(this.storage_id));
+    } catch (e) {
+      return {};
+    }
+  };
+  clearStorage() {
+    this.secureStorage.clear();
   }
 }
+
+export default new SecureStorage('user_data');
