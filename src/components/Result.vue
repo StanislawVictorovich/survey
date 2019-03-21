@@ -1,12 +1,17 @@
 <template lang="pug">
 div
   h1 {{ firstName }}, here is your result
-  md-progress-spinner(md-mode="determinate", :md-value="result") {{ result }}%
+  md-progress-spinner(
+    md-mode='determinate', 
+    :md-value='result'
+  )
+  | {{ result }}%
   h3 You have answered right to {{ correctAnswers }} of {{ questions.length }} questions.
+  md-button.md-primary(@click='start') Take the test again
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import storage from '../services/storage';
 import types from '../store/types';
 
@@ -21,21 +26,30 @@ export default {
   },
   computed: {
     ...mapGetters([types.questions]),
-    result: {
-      get() {
-        return 100 / this.questions.length * this.correctAnswers;
-      }
+    result() {
+        return Math.floor(100 / this.questions.length * this.correctAnswers);
     }
   },
   methods: {
+    ...mapActions([types.randomizeQuestions, types.saveQuestions]),
     calculcateCorrectAnsers() {
-      this.questions.forEach((item, i) => {       
+      for (const [i, item] of this.questions.entries()) {       
 
         if (item.correct === this.answersMatrix[i]) {
           this.correctAnswers += 1;
         } 
 
+      }
+    },
+    start() {
+      storage.setUserData({ 
+        currentStep: 0,
+        testComplete: false,
+        answersMatrix: [] 
       });
+      this.randomizeQuestions();
+      this.saveQuestions();
+      this.$router.push({ name: 'Survey' });
     }
   },
   created() {
@@ -46,9 +60,10 @@ export default {
       this.$router.push({ name: 'Accesserror' });
     }
 
-    this.firstName = storage.getUserData().firstName;
-    this.email = storage.getUserData().email;
-    this.answersMatrix = storage.getUserData().answersMatrix;
+    this.firstName = firstName;
+    this.email = email;
+    this.answersMatrix = answersMatrix;
+
     this.calculcateCorrectAnsers();
   }
 }

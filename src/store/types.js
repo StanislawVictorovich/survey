@@ -1,6 +1,10 @@
 export default {
-  INCREMENT_CORRECT_ANSWER: 'INCREMENT_CORRECT_ANSWER',
-  COMPLETE_TEST: 'COMPLETE_TEST',
   PRODUCTION_MODE: 'production',
-  questions: 'questions'
+  questions: 'questions',
+  RANDOMIZE_QUESTIONS: 'RANDOMIZE_QUESTIONS',
+  SAVE_QUESTIONS: 'SAVE_QUESTIONS',
+  RESTORE_QUESTIONS: 'RESTORE_QUESTIONS',
+  randomizeQuestions: 'randomizeQuestions',
+  saveQuestions: 'saveQuestions',
+  restoreQuestions: 'restoreQuestions'
 }
