@@ -33,10 +33,8 @@ export default {
     }
   },
   computed: {
-    validEmail: {
-      get() {
-        return constants.regEmail.test(this.email);
-      }
+    validEmail() {
+      return constants.regEmail.test(this.email);
     }
   },
   methods: {
