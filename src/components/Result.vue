@@ -4,7 +4,7 @@ div
   md-progress-spinner(
     md-mode='determinate', 
     :md-value='result'
-    )
+  )
   | {{ result }}%
   h3 You have answered right to {{ correctAnswers }} of {{ questions.length }} questions.
   md-button.md-primary(@click='start') Take the test again
