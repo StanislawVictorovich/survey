@@ -33,13 +33,13 @@ export default {
   methods: {
     ...mapActions([types.randomizeQuestions, types.saveQuestions]),
     calculcateCorrectAnsers() {
-      this.questions.forEach((item, i) => {       
+      for (const [i, item] of this.questions.entries()) {       
 
         if (item.correct === this.answersMatrix[i]) {
           this.correctAnswers += 1;
         } 
 
-      });
+      }
     },
     start() {
       storage.setUserData({ 
