@@ -6,7 +6,11 @@ md-card.md-layout-item.md-size-50.md-small-size-100
     .registration
       md-field(:class="messageClass")
         label First name
-        md-input(v-model="user.firstName", required="", @keydown="showErrorHint = false")
+        md-input(
+          v-model="user.firstName", 
+          required="", 
+          @keydown="showErrorHint = false"
+         )
         span.md-error First name is required
       md-field
         label Last name
