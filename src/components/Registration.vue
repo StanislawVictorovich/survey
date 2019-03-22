@@ -10,7 +10,7 @@ md-card.md-layout-item.md-size-50.md-small-size-100
           v-model="user.firstName", 
           required="", 
           @keydown="showErrorHint = false"
-         )
+        )
         span.md-error First name is required
       md-field
         label Last name
