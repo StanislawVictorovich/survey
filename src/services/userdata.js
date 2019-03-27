@@ -1,5 +1,5 @@
 import { SecureStorage } from "./storage";
-import constants from "./constants";
+import types from "./types";
 
 class UserData extends SecureStorage {
   constructor(key) {
@@ -80,7 +80,7 @@ class UserData extends SecureStorage {
   }
   saveNewUser() {
     const { firstName, lastName, email, date, users } = this.getUserData();
-    if (this.emailRegistered(email)) {
+    if (this.emailRegistered(email) || !users) {
       return false;
     }
     users.push({ firstName, lastName, email, date }); 
@@ -88,4 +88,4 @@ class UserData extends SecureStorage {
   }
 }
 
-export default new UserData(constants.SECURE_KEY);
+export default new UserData(types.SECURE_KEY);
