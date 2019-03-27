@@ -87,7 +87,7 @@ export default {
       return `${this.id}${index}`;
     }
   },
-  created() {console.log(userData.getUserData());
+  created() {
      const { email, firstName, testComplete, questions } = userData.getUserData();
 
     if(!email || !firstName || testComplete) {
