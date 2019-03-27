@@ -47,7 +47,6 @@ div
                 span.md-body-2 {{ choise }}
 </template>
 
-
 <script>
 import { mapGetters } from 'vuex';
 import usreData from '../services/userdata';
@@ -93,7 +92,3 @@ export default {
   filters: formatDate
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>
