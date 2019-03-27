@@ -1,20 +1,22 @@
-import SecureLS from 'secure-ls';
-import constants from './constants';
+import SecureLS from "secure-ls";
 
-class SecureStorage {
+export class SecureStorage {
   constructor(key) {
     this.storage_id = key;
-    this.secureStorage = new SecureLS({encodingType: 'base64', isCompression: true});
+    this.secureStorage = new SecureLS({
+      encodingType: "base64",
+      isCompression: true
+    });
   }
   setUserData(user) {
     const storedUser = this.getUserData();
 
     for (let key in storedUser) {
-      if (!user[key]) {
+      if (user[key] === undefined) {
         user[key] = storedUser[key];
       }
     }
-
+    
     this.secureStorage.set(this.storage_id, JSON.stringify(user));
   }
   getUserData() {
@@ -28,5 +30,3 @@ class SecureStorage {
     this.secureStorage.clear();
   }
 }
-
-export default new SecureStorage(constants.SECURE_KEY);

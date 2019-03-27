@@ -7,12 +7,14 @@ div
   )
   | {{ result }}%
   h3 You have answered right to {{ correctAnswers }} of {{ questions.length }} questions.
-  md-button.md-primary(@click='start') Take the test again
+  md-button.md-primary(@click='goHome') Go home
+  md-button.md-primary(@click='startTest') Take the test again
+  md-button.md-primary(@click='showUsers') Show users
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import storage from '../services/storage';
+import userData from '../services/userdata';
 import types from '../store/types';
 
 export default {
@@ -41,20 +43,41 @@ export default {
 
       }
     },
-    start() {
-      storage.setUserData({ 
-        currentStep: 0,
-        testComplete: false,
-        answersMatrix: [] 
-      });
+    startTest() {
+      userData.currentStep = 0;
+      userData.testComplete = false;
+      userData.answersMatrix = [];
       this.randomizeQuestions();
       this.saveQuestions();
       this.$router.push({ name: 'Survey' });
+    },
+    goHome() {
+      this.$router.push({ name: 'Home' });
+    },
+    showUsers() {
+      this.saveCurrentUserSurvey();
+      this.$router.push({ name: 'Users' });
+    },
+    saveCurrentUserSurvey() {
+      const { email, firstName, lastName, date, answersMatrix } = userData.getUserData();
+      const questionsIdMatrix = [];
+      const users = userData.users || [];
+
+      for (const [i, item] of this.questions.entries()) {
+        questionsIdMatrix.push(item.id);
+      }
+
+      users.push({
+        firstName, lastName, email, date, answersMatrix, questionsIdMatrix
+      });
+
+      //storage.setUserData({ users });
+      userData.users = users; console.log(userData.getUserData());
     }
   },
   created() {
 
-    const { email, firstName, answersMatrix } = storage.getUserData();
+    const { email, firstName, answersMatrix } = userData.getUserData();
 
     if (!firstName || !email || !answersMatrix) {
       this.$router.push({ name: 'Accesserror' });

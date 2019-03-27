@@ -22,6 +22,16 @@ export const routes = [
     component: () => import('../components/Result.vue')
   },
   {
+    path: '/users',
+    name: 'Users',
+    component: () => import('../components/Users.vue')
+  },
+  {
+    path: '/userdetails?id=:id',
+    name: 'UserDetails',
+    component: () => import('../components/UserDetails.vue')
+  },
+  {
     path: '/accesserror',
     name: 'Accesserror',
     component: () => import('../components/AccessError.vue')
