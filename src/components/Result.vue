@@ -55,7 +55,9 @@ export default {
       this.$router.push({ name: 'Home' });
     },
     showUsers() {
-      this.saveCurrentUserSurvey();
+      if (!userData.emailRegistered(this.email)) {
+        this.saveCurrentUserSurvey();
+      }
       this.$router.push({ name: 'Users' });
     },
     saveCurrentUserSurvey() {
@@ -71,8 +73,7 @@ export default {
         firstName, lastName, email, date, answersMatrix, questionsIdMatrix
       });
 
-      //storage.setUserData({ users });
-      userData.users = users; console.log(userData.getUserData());
+      userData.users = users;
     }
   },
   created() {
