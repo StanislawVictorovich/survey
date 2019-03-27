@@ -25,6 +25,8 @@ You need to install [node](http://nodejs.org/) and [git](https://git-scm.com/) l
   <a href="https://ibb.co/H2kH7T8"><img src="https://i.ibb.co/H2kH7T8/1.png" alt="1" border="0"></a>
   <a href="https://ibb.co/pbC6PYD"><img src="https://i.ibb.co/pbC6PYD/1.png" alt="1" border="0"></a>
   <a href="https://ibb.co/4gXNdfq"><img src="https://i.ibb.co/4gXNdfq/1.png" alt="1" border="0"></a>
+  <a href="https://ibb.co/T8SrQGM"><img src="https://i.ibb.co/T8SrQGM/1.png" alt="1" border="0"></a>
+  <a href="https://ibb.co/dJVTy9z"><img src="https://i.ibb.co/dJVTy9z/1.png" alt="1" border="0"></a>
 </div>
 
 ## Getting started
