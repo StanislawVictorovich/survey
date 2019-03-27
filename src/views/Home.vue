@@ -10,7 +10,8 @@ div
     @md-confirm="confirm" 
     @md-cancel="cancel"
   )
-  md-button.md-primary.md-raised(@click="active = true") Start
+  md-button.md-primary.md-raised(@click="active = true") Start registration
+  md-button.md-primary.md-raised(@click="showUsers") Show users
   md-snackbar(
     md-position="left", 
     :md-duration="4000", 
@@ -38,7 +39,7 @@ export default {
       active: false,
       errorEmailInvalid: false,
       errorEmailRegistered: false,
-      email: null
+      email: ''
     }
   },
   computed: {
@@ -64,6 +65,9 @@ export default {
     },
     cancel() {
       this.active = false;
+    },
+    showUsers() {
+      this.$router.push({ name: 'Users' });
     }
   }
 }
