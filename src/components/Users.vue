@@ -1,23 +1,16 @@
-<template>
-  <div>
-    <md-button @click="newUser">Go to new registration</md-button><br>
-    <md-card md-with-hover v-for="(user, index) in users" :key="user.email">
-      <md-ripple>
-        <md-card-header>
-          <div class="md-title"> {{ user.firstName }} </div>
-          <div class="md-subhead"> {{ user.email }} </div>
-        </md-card-header>
-
-        <md-card-content>
-          Born in {{ new Date(user.date) | formatDate }}.
-        </md-card-content>
-
-        <md-card-actions>
-          <md-button @click="showDetails(index)">Details</md-button>
-        </md-card-actions>
-      </md-ripple>
-    </md-card>
-  </div>
+<template lang="pug">
+div
+  md-button(@click='newUser') Go to new registration
+  br
+  md-card(md-with-hover='', v-for='(user, index) in users', :key='user.email')
+    md-ripple
+      md-card-header
+        .md-title  {{ user.firstName }} 
+        .md-subhead  {{ user.email }} 
+      md-card-content
+        | Born in {{ new Date(user.date) | formatDate }}.
+      md-card-actions
+        md-button(@click='showDetails(index)') Details
 </template>
 
 <script>
