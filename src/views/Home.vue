@@ -12,6 +12,9 @@ div
   )
   md-button.md-primary.md-raised(@click="active = true") Start registration
   md-button.md-primary.md-raised(@click="showUsers") Show users
+  //-************************ need to be deleted ********************************/
+  md-button.md-primary.md-raised(@click="test") -=Read mock data=- 
+  //-****************************************************************************/
   md-snackbar(
     md-position="left", 
     :md-duration="4000", 
@@ -31,6 +34,7 @@ div
 <script>
 import constants from '../types/constants';
 import userData from '../services/userdata';
+import mock from '../mock.data';/************************ need to be deleted ********************************/
 
 export default {
   name: 'home',
@@ -68,6 +72,11 @@ export default {
     },
     showUsers() {
       this.$router.push({ name: 'Users' });
+    },
+    test() {/************************ need to be deleted ********************************/
+      const users = JSON.parse(mock);
+      userData.setUserData({users}); 
+      console.log(userData.getUserData());
     }
   }
 }
