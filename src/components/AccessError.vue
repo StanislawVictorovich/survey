@@ -1,7 +1,16 @@
 <template lang="pug">
-span.md-display-3 You are not allowed to visit this page!
+div
+  span.md-display-3 You are not allowed to visit this page!
+  p 
+    md-button.md-primary(@click="goBack") Go back
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    goBack() {
+      this.$router.go(-1);
+    }
+  },
+};
 </script>
