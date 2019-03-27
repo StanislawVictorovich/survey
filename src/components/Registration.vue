@@ -28,6 +28,7 @@ export default {
     return {
       firstName: '',
       lastName: '',
+      password: '',
       date: '',
       showErrorHint: false
     }
