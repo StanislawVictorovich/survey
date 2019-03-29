@@ -11,18 +11,13 @@ div
         span.md-headline  Born in {{ new Date(user.date) | formatDate }} 
     .md-layout-item
       span.md-display-1 Your results: 
-      md-progress-spinner(
-        :md-diameter='90', 
-        :md-stroke='20', 
-        md-mode='determinate', 
-        :md-value='result'
-      )
+      md-progress-spinner(md-mode='determinate', :md-value='result')
       | {{ result }}%
-      h3  You have answered right to {{ correctAnswers }} of {{ questions.length }} questions.
+      h3
+        | You have answered right to {{ correctAnswers }} of {{ questions.length }} questions.
   p
     span.caption  The results of a close examination of javascript are given below.
   md-table.table(
-    :md-height='350', 
     v-model='questions', 
     md-sort-order='asc', 
     md-fixed-header=''
@@ -33,19 +28,18 @@ div
       md-table-cell(md-label='Title', v-html='item.title')
       md-table-cell(md-label='Choises')
         md-list
-          md-list-item(
-            v-for='(choise, index) of item.choises', 
-            :key='choise'
-          )
+          md-list-item(v-for='(choise, index) of item.choises', :key='choise')
             md-radio(
               v-model='item.choises[getUsersAnswerByQuestionsId(item.id)]', 
-              disabled='', :value='choise'
+              disabled='', 
+              :value='choise'
             )
               md-chip.md-accent(v-if='item.correct === index')
-                span.md-body-2 {{ choise }}
+                | {{ choise }}
               div(v-else='')
-                span.md-body-2 {{ choise }}
+                | {{ choise }}
 </template>
+
 
 <script>
 import { mapGetters } from 'vuex';
