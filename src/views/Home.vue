@@ -29,6 +29,15 @@ div
     md-persistent=""
   )
     span This email address has already registered!
+  //-************************ need to be deleted ********************************/
+  md-snackbar(
+    md-position="left", 
+    :md-duration="4000", 
+    :md-active.sync="usersGenerate", 
+    md-persistent=""
+  )
+    span Users has generated! Check users manager page.
+  //-****************************************************************************/
 </template>
 
 <script>
@@ -43,6 +52,7 @@ export default {
       active: false,
       errorEmailInvalid: false,
       errorEmailRegistered: false,
+      usersGenerate: false,/************************ need to be deleted ********************************/
       email: ''
     }
   },
@@ -77,6 +87,7 @@ export default {
       const users = JSON.parse(mock);
       userData.setUserData({users}); 
       console.log(userData.getUserData());
+      this.usersGenerate = true;
     }
   }
 }
