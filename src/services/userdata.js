@@ -1,10 +1,10 @@
 import { SecureStorage } from "./storage";
-import types from "./types";
+import constants from "./constants";
 
 class UserData extends SecureStorage {
   constructor(key) {
     super(key);
-    types.STORAGE_FIELDS.forEach(item => { // getters-setters genereator factory
+    constants.STORAGE_FIELDS.forEach(item => { // getters-setters genereator factory
       Object.defineProperty(this, item, {
         get() {
           return this.getUserData()[item];
@@ -25,4 +25,4 @@ class UserData extends SecureStorage {
   }
 }
 
-export default new UserData(types.SECURE_KEY);
+export default new UserData(constants.SECURE_KEY);
