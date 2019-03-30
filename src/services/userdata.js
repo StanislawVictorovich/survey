@@ -12,7 +12,7 @@ class UserData extends SecureStorage {
         set(value) {
           this.setUserData(new function() { 
             this[item] = value;
-          })
+          });
         }
       });
     });
