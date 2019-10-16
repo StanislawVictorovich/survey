@@ -21,7 +21,7 @@ div
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import storage from '../services/storage';
+import userData from '../services/userdata';
 import types from '../store/types';
 import constants from '../types/constants';
 
@@ -65,30 +65,30 @@ export default {
       }
 
       this.survey.currentStep = indexOfQuestion + 1;
-      storage.setUserData(this.survey);
+      [userData.currentStep, userData.answersMatrix, userData.testComplete] = [this.survey.currentStep, this.survey.answersMatrix, this.survey.testComplete];
       this.selectedChiose = null;
       this.active = this.getIdOfElementByIndex(this.survey.currentStep);
       this.updateProgress();
     },
     updateProgress() {
-      this.progressPercents = storage.getUserData().currentStep * this.oneStepProgressPercent;
+      this.progressPercents = userData.currentStep * this.oneStepProgressPercent || 0;
     },
     restoreSurveySession() {
       this.restoreQuestions();
       this.updateProgress();
 
-      const { currentStep, answersMatrix, testComplete } = storage.getUserData();
+      const { currentStep, answersMatrix, testComplete } = userData.getUserData();
       this.survey.currentStep = currentStep || 0;
       this.survey.answersMatrix = answersMatrix || [];
       this.survey.testComplete = testComplete || false;
       this.active = this.getIdOfElementByIndex(this.survey.currentStep || 0);
     },
     getIdOfElementByIndex(index) {
-        return `${this.id}${index}`;
+      return `${this.id}${index}`;
     }
   },
   created() {
-    const { email, firstName, testComplete, questions } = storage.getUserData();
+     const { email, firstName, testComplete, questions } = userData.getUserData();
 
     if(!email || !firstName || testComplete) {
       this.$router.push({ name: 'Accesserror' });
